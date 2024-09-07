@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=SUSE:wght@100..800&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="imagens/favicon.webp" type="image/x-icon">
+    <title>Jogo da Forca - 2 Jogadores</title></head>
+<body>
+    <div class="overlay"></div>
+    <header>
+        <h1>Jogo da Forca - 2 Jogadores</h1>
+    </header>
+    <section>
+        <fieldset>
+            <section class="modo-de-jogo">
+                <span class="legenda">Modo de Jogo</span>
+                <div class="radio-buttons">
+                  <input type="radio" id="doisJogadores" name="modoDeJogo" value="doisJogadores" checked>
+                  <label for="doisJogadores" aria-label="Jogar com dois jogadores">2 Jogadores</label>
+                  <br>
+                  <input type="radio" id="contraComputador" name="modoDeJogo" value="contraComputador">
+                  <label for="contraComputador" aria-label="Jogar contra o Computador">Jogar Contra o Computador</label>
+                </div>
+              </section>
+            
+            <label class="jogador-label" for="jogadorUm">
+                <span id="span-jogador1">Jogador 1</span>
+                <input class="jogador-input" id="jogadorUm" type="text" aria-label="Digite o nome do jogador 1" placeholder="Digite o nome do jogador 1" />
+            </label>
+            <label id="label-jogadorDois" class="jogador-label" for="jogadorDois">
+                <span>Jogador 2</span>
+                <input class="jogador-input" id="jogadorDois" type="text" aria-label="Digite o nome do jogador 2"  placeholder="Digite o nome do jogador 2" />
+            </label>
+        </fieldset>
+
+        <button class="btn btn-como-jogar" onclick="mostrarExplicacao()">Como Jogar</button>
+        <button class="btn btn-novo-jogo" onclick="novoJovo()">Novo Jogo</button>
+    </section>
+    <section id="explicacao-jogar" class="box-conteudo oculto">
+        <h2>Como Jogar</h2>
+        <p>
+          <b>Objetivo:</b> Descubra a palavra secreta, letra por letra!
+        </p>
+        <ul>
+          <li><b>Modo 1 Jogador:</b> Enfrente o computador em um desafio de palavras!</li>
+          <li><b>Modo 2 Jogadores:</b> Desafie um amigo e descubra quem é o melhor jogador!</li>
+        </ul>
+        <p>
+          <b>Regras:</b>
+          <ul>
+            <li>Escolha uma letra por vez.</li>
+            <li>Se a letra estiver na palavra, ela será revelada.</li>
+            <li>Se errar, a vez passa para o próximo jogador ou computador.</li>
+            <li>Ganha quem acertar todas as letras primeiro!</li>
+          </ul>
+          <button class="btn btn-novo-jogo" onclick="fecharExplicacao()">Fechar</button>
+        </p>
+    </section>
+    <section class="Forca">
+
+    </section>
+
+    <section id="box-jogo" class="box-conteudo oculto">
+        <h2 id="mensagem"></h2>
+
+        <div class="forca-container">
+            <img src="imagens/Jogoforca0.png" id="imagem-forca" alt="Forca" class="forca-imagem">
+        </div>
+        
+        <div class="palavra-secreta">
+            
+        </div>
+
+        <div class="teclado">
+        </div>
+
+        <div id="indicadorJogadorUm" class="jogador ativo">
+            Jogador 1
+            </div>
+        <div id="indicadorJogadorDois" class="jogador">
+            Jogador 2
+        </div>
+        <div id="indicadorJogadorComputador" class="jogador">
+            Computador
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 - Todos os direitos reservados.</p>
+    </footer>
+
+    <script src="palavras.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
