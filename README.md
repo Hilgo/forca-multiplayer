@@ -1,5 +1,7 @@
 # Jogo da Forca em JavaScript - 2 Jogadores
 
+[**JOGUE AQUI**](https://hilgo.github.io/forca-multiplayer/)
+
 **Descrição:**
 Um jogo clássico da forca implementado em JavaScript, mas com a diferença que você pode jogar com alguém ou contra o computador!
 Adivinhe as letras e descubra a palavra secreta antes que o boneco seja enforcado!
