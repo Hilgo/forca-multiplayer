@@ -1,8 +1,43 @@
+//variáveis globais
 // Seleciona a div onde os botões serão inseridos
 const teclado = document.querySelector('.teclado');
 
 // Cria um array com as letras do alfabeto
 const alfabeto = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+
+let erros = 0;
+let fimJogo = false;
+let modoJogoSelecionado = 'DoisJogadores';
+const vogais = ['A', 'E', 'I', 'O', 'U'];
+const consoantesComuns = ['S', 'R', 'N', 'T', 'L','B','D'];
+let letrasUtilizadas = [];
+let jogadorAtual = 'Jogador1';
+let palavraSecreta = '';
+let nomejogadorUm = '';
+let nomejogadorDois = '';
+const modoDeJogo = document.getElementsByName('modoDeJogo');
+
+// Funções de inicialização
+
+modoDeJogo.forEach(radio => {
+  radio.addEventListener('change', () => {
+    if (radio.value === 'contraComputador') {
+      // Lógica para o modo solo
+      esconderInputJogadorDois();
+    } else {
+      // Lógica para dois jogadores
+      mostrarInputJogadorDois()
+    }
+  });
+});
+
+function escolherPalavraAleatoria(palavras) {
+  // Obtém o índice aleatório dentro do tamanho do array
+  const indiceAleatorio = Math.floor(Math.random() * palavras.length);
+
+  // Retorna a palavra correspondente ao índice aleatório
+  return palavras[indiceAleatorio];
+}
 
 // Itera sobre o array de letras e cria um botão para cada uma
 alfabeto.forEach(letra => {
@@ -19,17 +54,59 @@ alfabeto.forEach(letra => {
     teclado.appendChild(botao);
 });
 
-function escolherPalavraAleatoria(palavras) {
-  // Obtém o índice aleatório dentro do tamanho do array
-  const indiceAleatorio = Math.floor(Math.random() * palavras.length);
+// Funções de gerenciamento do jogo
 
-  // Retorna a palavra correspondente ao índice aleatório
-  return palavras[indiceAleatorio];
+function novoJovo(){
+  resetarJogo();
+  let modoJogo = document.querySelector('input[name="modoDeJogo"]:checked').value;
+  const boxJogo = document.getElementById('box-jogo');
+  nomejogadorUm = document.getElementById('jogadorUm').value;
+
+  if(nomejogadorUm.length == 0){
+    alert("Informe nome do Jogador 1");
+    return;
+  }
+  document.getElementById('indicadorJogadorUm').innerText = nomejogadorUm;
+
+  nomejogadorDois = document.getElementById('jogadorDois').value;
+  const indicadorJogadorComputador = document.getElementById('indicadorJogadorComputador');
+
+  if(modoJogo == "doisJogadores"){
+    if(nomejogadorDois.length == 0){
+      alert("Informe nome do Jogador 2");
+      return;
+    }
+    modoJogoSelecionado = "doisJogadores";
+    escolherPrimeiroJogador();
+    indicadorJogadorComputador.classList.add('oculto');
+    indicadorJogadorDois.classList.remove('oculto');
+  }
+  else{
+    modoJogoSelecionado = "Computador";
+    escolherPrimeiroJogador(true);
+    indicadorJogadorComputador.classList.remove('oculto');
+    indicadorJogadorDois.classList.add('oculto');
+  }
+
+  document.getElementById('indicadorJogadorDois').innerText = nomejogadorDois;
+  boxJogo.classList.remove('oculto');
+
+  palavraSecreta = atob(escolherPalavraAleatoria(palavras));
+
+  const palavraSecretaDiv = document.querySelector('.palavra-secreta');
+
+  for (let i = 0; i < palavraSecreta.length; i++) {
+    const letraSpan = document.createElement('span');
+    letraSpan.classList.add('letra-palavra-secreta');
+    letraSpan.textContent = "_";
+    palavraSecretaDiv.appendChild(letraSpan);
+  }    
+  
 }
 
-let erros = 0;
-let fimJogo = false;
-let modoJogoSelecionado = 'DoisJogadores';
+function atualizarMensagem(mensagem) {
+  document.getElementById('mensagem').innerHTML = mensagem;
+}
 
 function verificarLetra(letra,botao, ehTurnoComputador = false) {
   if(fimJogo)
@@ -41,7 +118,6 @@ function verificarLetra(letra,botao, ehTurnoComputador = false) {
       return;
     }
   }
-
   const forcaImg = document.getElementById('imagem-forca');
 
   const letrasPalavraSecreta = document.querySelectorAll('.letra-palavra-secreta');
@@ -64,22 +140,22 @@ function verificarLetra(letra,botao, ehTurnoComputador = false) {
     forcaImg.src = `imagens/Jogoforca${erros}.png`;
     if(modoJogoSelecionado == "doisJogadores"){
       if(jogadorAtual == "indicadorJogadorUm"){
-        document.getElementById('mensagem').innerHTML  = 'Jogador ' + nomejogadorUm + ' errou, vez do jogador '+ nomejogadorDois ;
+        atualizarMensagem('Jogador ' + nomejogadorUm + ' errou, vez do jogador '+ nomejogadorDois);
         mudarJogadorAtivo("indicadorJogadorDois");
       }
       else{
-        document.getElementById('mensagem').innerHTML  = 'Jogador ' + nomejogadorDois + ' errou, vez do jogador '+ nomejogadorUm ;
+        atualizarMensagem('Jogador ' + nomejogadorDois + ' errou, vez do jogador '+ nomejogadorUm);
         mudarJogadorAtivo("indicadorJogadorUm");
       }
     }
     else{
       if(jogadorAtual == "indicadorJogadorUm"){
-        document.getElementById('mensagem').innerHTML  = 'Jogador ' + nomejogadorUm + ' errou, vez do Computador';
+        atualizarMensagem('Jogador ' + nomejogadorUm + ' errou, vez do Computador');
         mudarJogadorAtivo("indicadorJogadorComputador");
         jogadaDoComputador();
       }
       else{
-        document.getElementById('mensagem').innerHTML  = 'Computador errou, vez do Jogador ' + nomejogadorUm;
+        atualizarMensagem('Computador errou, vez do Jogador ' + nomejogadorUm);
         mudarJogadorAtivo("indicadorJogadorUm");
 
       }
@@ -88,7 +164,7 @@ function verificarLetra(letra,botao, ehTurnoComputador = false) {
     if (erros === 8) {
       // Fim de jogo, jogador perdeu
       fimJogo = true;
-      document.getElementById('mensagem').innerHTML  = 'Ninguém ganhou! A Palava Secreta Era:' + palavraSecreta;
+      atualizarMensagem('Ninguém ganhou! A Palava Secreta Era:' + palavraSecreta);
       alert('Ninguém ganhou! A Palava Secreta Era:' + palavraSecreta);
       revelarPalavraSecreta();
     }
@@ -97,41 +173,41 @@ function verificarLetra(letra,botao, ehTurnoComputador = false) {
     
     if(modoJogoSelecionado == "doisJogadores"){
       if(jogadorAtual == "indicadorJogadorUm"){
-        document.getElementById('mensagem').innerHTML  = 'Jogador ' + nomejogadorUm + ' Acertou! ';
+        atualizarMensagem('Jogador ' + nomejogadorUm + ' Acertou! ');
         if (verificarVitoria()) {
           // Mostrar mensagem de vitória
           fimJogo = true;
-          document.getElementById('mensagem').innerHTML  = 'O Jogador ' + nomejogadorUm + ' venceu! E acertou a palavra: '+ palavraSecreta;
+          atualizarMensagem('O Jogador ' + nomejogadorUm + ' venceu! E acertou a palavra: '+ palavraSecreta);
           alert('O Jogador ' + nomejogadorUm + ' venceu! E acertou a palavra: '+ palavraSecreta);
         }
       }
       else{
-        document.getElementById('mensagem').innerHTML  = 'Jogador ' + nomejogadorDois + ' Acertou! ' ;
+        atualizarMensagem('Jogador ' + nomejogadorDois + ' Acertou! ');
         if (verificarVitoria()) {
           // Mostrar mensagem de vitória
           fimJogo = true;
-          document.getElementById('mensagem').innerHTML  = 'O Jogador ' + nomejogadorDois + ' venceu! E acertou a palavra: '+ palavraSecreta;
+          atualizarMensagem('O Jogador ' + nomejogadorDois + ' venceu! E acertou a palavra: '+ palavraSecreta);
           alert('O Jogador ' + nomejogadorDois + ' venceu! E acertou a palavra: '+ palavraSecreta);
         }
       }
     }
     else{
       if(jogadorAtual == "indicadorJogadorUm"){
-        document.getElementById('mensagem').innerHTML  = 'Jogador ' + nomejogadorUm + ' Acertou! ';
+        atualizarMensagem('Jogador ' + nomejogadorUm + ' Acertou! ');
         if (verificarVitoria()) {
           // Mostrar mensagem de vitória
           fimJogo = true;
-          document.getElementById('mensagem').innerHTML  = 'O Jogador ' + nomejogadorUm + ' venceu! E acertou a palavra: '+ palavraSecreta;
+          atualizarMensagem('O Jogador ' + nomejogadorUm + ' venceu! E acertou a palavra: '+ palavraSecreta);
           alert('O Jogador ' + nomejogadorUm + ' venceu! E acertou a palavra: '+ palavraSecreta);
         }
       }
       else{
-        document.getElementById('mensagem').innerHTML  = 'Computador Acertou!';
+        atualizarMensagem('Computador Acertou!');
         
         if (verificarVitoria()) {
           // Mostrar mensagem de vitória
           fimJogo = true;
-          document.getElementById('mensagem').innerHTML  = 'O Computador venceu! E acertou a palavra: '+ palavraSecreta;
+          atualizarMensagem('O Computador venceu! E acertou a palavra: '+ palavraSecreta);
           alert('O Computador venceu! E acertou a palavra: '+ palavraSecreta);
         }
         else{
@@ -142,13 +218,9 @@ function verificarLetra(letra,botao, ehTurnoComputador = false) {
   }
 }
 
-const vogais = ['A', 'E', 'I', 'O', 'U'];
-const consoantesComuns = ['S', 'R', 'N', 'T', 'L','B','D'];
-let letrasUtilizadas = [];
-
 function jogadaDoComputador() {
   // Verificar se há vogais não utilizadas
-  document.getElementById('mensagem').innerHTML  = 'O computador está pensando...';
+  atualizarMensagem('O computador está pensando...');
   const vogaisDisponiveis = vogais.filter(vogal => !letrasUtilizadas.includes(vogal));
   if (vogaisDisponiveis.length > 0) {
       const indiceAleatorio = Math.floor(Math.random() * vogaisDisponiveis.length);
@@ -185,13 +257,6 @@ function jogadaDoComputador() {
   }, 1000); // Aguarda 1 segundo antes de verificar a letra
 }
 
-function revelarPalavraSecreta() {
-  const letrasPalavraSecreta = document.querySelectorAll('.letra-palavra-secreta');
-  letrasPalavraSecreta.forEach((letra, index) => {
-    letra.textContent = palavraSecreta[index];
-  });
-}
-
 function verificarVitoria() {
   const letrasPalavraSecreta = document.querySelectorAll('.letra-palavra-secreta');
   return [...letrasPalavraSecreta].every(letra => letra.textContent !== '_');
@@ -205,8 +270,7 @@ function resetarJogo() {
   modoJogoSelecionado = 'doisJogadores';
   jogadorAtual = 'Jogador1';
   letrasUtilizadas = [];
-  document.getElementById('mensagem').innerHTML  = '' ;
-
+  atualizarMensagem('');
 
   // Remover todos os filhos do elemento que contém a palavra secreta
   const palavraSecretaDiv = document.querySelector('.palavra-secreta');
@@ -228,13 +292,17 @@ function resetarJogo() {
   const jogadores = document.querySelectorAll('.jogador');
   // Remove a classe "ativo" de todos os jogadores
   jogadores.forEach(jogador => jogador.classList.remove('ativo'));
-
-  // Reinicializar variáveis globais
   palavraSecreta = '';
-  // ... (reinicialize outras variáveis globais)
 
-  // Remover eventuais ouvintes de eventos
-  // ... (adicione aqui a lógica para remover ouvintes de eventos)
+}
+
+// Funções de interface
+
+function revelarPalavraSecreta() {
+  const letrasPalavraSecreta = document.querySelectorAll('.letra-palavra-secreta');
+  letrasPalavraSecreta.forEach((letra, index) => {
+    letra.textContent = palavraSecreta[index];
+  });
 }
 
 function mudarJogadorAtivo(idJogador) {
@@ -250,17 +318,12 @@ function mudarJogadorAtivo(idJogador) {
   jogadorAtual = idJogador;
 }
 
-let jogadorAtual = 'Jogador1';
-let palavraSecreta = '';
-let nomejogadorUm = '';
-let nomejogadorDois = '';
-
 function escolherPrimeiroJogador(contraComputador) {
   if (contraComputador) {
     // Jogo contra o computador, o jogador 1 sempre começa
     jogadorAtual = 'Jogador1';
     mudarJogadorAtivo("indicadorJogadorUm");
-    document.getElementById('mensagem').innerHTML  = 'O Jogador ' + nomejogadorUm + ' começa';
+    atualizarMensagem('O Jogador ' + nomejogadorUm + ' começa');
     return 'Jogador 1';
   } else {
     // Jogo entre dois jogadores, escolhe aleatoriamente
@@ -270,63 +333,14 @@ function escolherPrimeiroJogador(contraComputador) {
     jogadorAtual = primeiroJogador;
     if (primeiroJogador == "Jogador1"){
       mudarJogadorAtivo("indicadorJogadorUm");
-      document.getElementById('mensagem').innerHTML  = 'O Jogador ' + nomejogadorUm + ' começa';
+      atualizarMensagem('O Jogador ' + nomejogadorUm + ' começa');
     }
     else{
-      document.getElementById('mensagem').innerHTML  = 'O Jogador ' + nomejogadorDois + ' começa';
+      atualizarMensagem('O Jogador ' + nomejogadorDois + ' começa');
       mudarJogadorAtivo("indicadorJogadorDois");
     }
     return primeiroJogador;
   }
-}
-
-function novoJovo(){
-    resetarJogo();
-    let modoJogo = document.querySelector('input[name="modoDeJogo"]:checked').value;
-    const boxJogo = document.getElementById('box-jogo');
-    nomejogadorUm = document.getElementById('jogadorUm').value;
-
-    if(nomejogadorUm.length == 0){
-      alert("Informe nome do Jogador 1");
-      return;
-    }
-
-    document.getElementById('indicadorJogadorUm').innerText = nomejogadorUm;
-
-    nomejogadorDois = document.getElementById('jogadorDois').value;
-    const indicadorJogadorComputador = document.getElementById('indicadorJogadorComputador');
-
-    if(modoJogo == "doisJogadores"){
-      if(nomejogadorDois.length == 0){
-        alert("Informe nome do Jogador 2");
-        return;
-      }
-      modoJogoSelecionado = "doisJogadores";
-      escolherPrimeiroJogador();
-      indicadorJogadorComputador.classList.add('oculto');
-      indicadorJogadorDois.classList.remove('oculto');
-    }
-    else{
-      modoJogoSelecionado = "Computador";
-      escolherPrimeiroJogador(true);
-      indicadorJogadorComputador.classList.remove('oculto');
-      indicadorJogadorDois.classList.add('oculto');
-    }
-
-    document.getElementById('indicadorJogadorDois').innerText = nomejogadorDois;
-    boxJogo.classList.remove('oculto');
-
-    palavraSecreta = atob(escolherPalavraAleatoria(palavras));
-
-    const palavraSecretaDiv = document.querySelector('.palavra-secreta');
-
-    for (let i = 0; i < palavraSecreta.length; i++) {
-      const letraSpan = document.createElement('span');
-      letraSpan.classList.add('letra-palavra-secreta');
-      letraSpan.textContent = "_";
-      palavraSecretaDiv.appendChild(letraSpan);
-    }    
-    
 }
 
 function mostrarInputJogadorDois() {
@@ -365,17 +379,3 @@ function mostrarInputJogadorDois() {
 
     secaoExplicacao.classList.add('oculto'); // Adiciona a classe para ocultar
   }
-
-const modoDeJogo = document.getElementsByName('modoDeJogo');
-
-modoDeJogo.forEach(radio => {
-  radio.addEventListener('change', () => {
-    if (radio.value === 'contraComputador') {
-      // Lógica para o modo solo
-      esconderInputJogadorDois();
-    } else {
-      // Lógica para dois jogadores
-      mostrarInputJogadorDois()
-    }
-  });
-});

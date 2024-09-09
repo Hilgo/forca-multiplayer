@@ -1,249 +1,248 @@
 /* Estilos globais */
 body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    background-color: #343131;
-    color: #D8A25E;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  background-color: #343131;
+  color: #D8A25E;
 }
 
-h1{
-    font-family: 'Luckiest Guy', sans-serif;
+h1 {
+  font-family: 'Luckiest Guy', sans-serif;
 }
+
 header {
-    padding: 5px;
-}
-header h1{
-    margin: 15px;
+  padding: 5px;
 }
 
-/* Estilo comum para ambos os botões */
+header h1 {
+  margin: 15px;
+}
+
+/* Botões */
 .btn {
-    font-family: "SUSE", sans-serif;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    margin-top: 10px;
-    cursor: pointer;
-    transition-duration: 0.4s;
-    border: none;
-    border-radius: 5px;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
-  }
-  
-  /* Estilo específico para o botão "Novo Jogo" */
-  .btn-novo-jogo {
-    background-color: #A04747;
-    color: #D8A25E;
-    padding: 15px 32px;
-  }
-  
-  /* Estilo específico para o novo botão */
-  .btn-como-jogar {
-    background-color: #D8A25E;
-    color: #A04747;
-    padding: 15px 30px; /* Ajuste o padding se necessário */
-  }
-  
-  .btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-  }
+  font-family: "SUSE", sans-serif;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  margin-top: 10px;
+  cursor: pointer;
+  transition-duration: 0.4s;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+}
 
-/* Estilos para a área de jogo */
+.btn-novo-jogo {
+  background-color: #A04747;
+  color: #D8A25E;
+  padding: 15px 32px;
+}
+
+.btn-como-jogar {
+  background-color: #D8A25E;
+  color: #A04747;
+  padding: 15px 30px;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Área de jogo */
 .box-conteudo {
-    font-family: "SUSE", sans-serif;
-    margin: 20px auto;
-    width: 80%;
-    border: 1px solid #D8A25E;
-    padding: 10px;
-    border-radius: 5px;
-    background-color: #D8A25E;
-    color: #343131;
+  font-family: "SUSE", sans-serif;
+  margin: 20px auto;
+  width: 80%;
+  border: 1px solid #D8A25E;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #D8A25E;
+  color: #343131;
 }
 
-.box-conteudo ul{
-    font-family: "SUSE", sans-serif;
-    text-align: left;
-    width: 50%;
-    margin: 0 auto;
+.box-conteudo ul {
+  font-family: "SUSE", sans-serif;
+  text-align: left;
+  width: 50%;
+  margin: 0 auto;
 }
-#explicacao-jogar .btn{
-    transition-duration: 0s;
-    margin-top: 20px;
-}
+
 #explicacao-jogar {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: #D8A25E;
-    padding: 20px;
-    border: 1px solid #D8A25E;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0,0.3);
-    color: #343131;
-    z-index: 999;
-    transition: all 0.5s ease-in-out;
-  }
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #D8A25E;
+  padding: 20px;
+  border: 1px solid #D8A25E;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0,0.3);
+  color: #343131;
+  z-index: 999;
+  transition: all 0.5s ease-in-out;
+}
 
-  .overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: none;
-    z-index: 998;
-    transition: opacity 0.5s ease-in-out;
-  }
-  
-.forca-container img{
-    width: 200px;
+#explicacao-jogar .btn {
+  transition-duration: 0s;
+  margin-top: 20px;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: none;
+  z-index: 998;
+  transition: opacity 0.5s ease-in-out;
+}
+
+/* Elementos de jogo */
+.forca-container img {
+  width: 200px;
 }
 
 .palavra-secreta {
-    font-size: 24px;
-    margin-bottom: 10px;
+  font-size: 24px;
+  margin-bottom: 10px;
+  text-transform: uppercase;
 }
 
-/* Estilos para cada jogador */
 .jogador {
-    margin-bottom: 20px;
-    font-size: 20px;
+  margin-bottom: 20px;
+  font-size: 20px;
 }
 
 .letras-usadas {
-    font-size: 18px;
-}
-
-.palavra-secreta {
-    font-size: 24px;
-    margin-bottom: 10px;
-    text-transform: uppercase;
+  font-size: 18px;
 }
 
 .teclado {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-    max-width: 60%;
-    margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  max-width: 60%;
+  margin: 0 auto;
 }
 
 .letra {
-    width: 40px;
-    height: 40px;
-    text-align: center;
-    line-height: 40px;
-    font-size: 18px;
-    border: 1px solid #D8A25E;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease; /* Adiciona transição para o efeito hover */
-    color: #343131;
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  line-height: 40px;
+  font-size: 18px;
+  border: 1px solid #D8A25E;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  color: #343131;
 }
-.letra:disabled{
-    opacity: 0.6;
-    cursor: not-allowed;
+
+.letra:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
+
 .letra:hover {
-    background-color: #af742a; /* Muda a cor de fundo ao passar o mouse */
-    transform: translateY(-2px);
-    
+  background-color: #af742a;
+  transform: translateY(-2px);
 }
 
-.letra-palavra-secreta{
-    padding: 5px;
+.letra-palavra-secreta {
+  padding: 5px;
 }
 
+/* Layout */
 html, body {
-    height: 100%;
-    margin: 0;
-  }
-  
-  body {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  footer {
-    font-family: "SUSE", sans-serif;
-    flex-shrink: 0; /* Impede o rodapé de encolher */
-  }
-
-fieldset{
-    border-radius: 5px;
-    width: 80%;
-    margin: 0 auto;
+  height: 100%;
+  margin: 0;
 }
 
-.legenda{
-    font-family: "SUSE", sans-serif;
-    display: block;
-    font-size: 20px;
-    font-weight: bold;
+body {
+  display: flex;
+  flex-direction: column;
 }
 
-.jogador{
-    margin: 10px auto;
-    width: 50%;
+footer {
+  font-family: "SUSE", sans-serif;
+  flex-shrink: 0;
 }
-.jogador.ativo{
-    border: 2px solid #A04747;
-    color:#A04747;
-    border-radius: 5px;
-    animation: piscar 0.5s infinite alternate;
+
+fieldset {
+  border-radius: 5px;
+  width: 80%;
+  margin: 0 auto;
+}
+
+.legenda {
+  font-family: "SUSE", sans-serif;
+  display: block;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.jogador {
+  margin: 10px auto;
+  width: 50%;
+}
+
+.jogador.ativo {
+  border: 2px solid #A04747;
+  color: #A04747;
+  border-radius: 5px;
+  animation: piscar 0.5s infinite alternate;
 }
 
 @keyframes piscar {
-    from {
+  from {
       border-color: transparent;
-    }
-    to {
-      border-color: #A04747;
-    }
   }
+  to {
+      border-color: #A04747;
+  }
+}
 
 .jogador-label {
-    display: flex;
-    flex-direction: row;
-    margin-bottom: 15px;
-    align-items: center;
-  }
-  
-  .jogador-input {
-    font-family: "SUSE", sans-serif;
-    flex: 1; /* Ocupa todo o espaço disponível */
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #D8A25E;
-    padding: 10px;
-    margin-left: 15px;
-  }
-  .jogador-input:focus {
-    outline: none;
-    border-color: #343131;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 15px;
+  align-items: center;
 }
-  
+
+.jogador-input {
+  font-family: "SUSE", sans-serif;
+  flex: 1;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #D8A25E;
+  padding: 10px;
+  margin-left: 15px;
+}
+
+.jogador-input:focus {
+  outline: none;
+  border-color: #343131;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
 .oculto {
-    visibility: hidden; 
-    opacity: 0; /* Adiciona uma transição de opacidade */
-    transform: translateY(-100%);
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(-100%);
 }
 
 .radio-buttons {
-    text-align: left;
-    display: inline-block;
-    margin: 5px;
-  }
-  
-.modo-de-jogo,span,input{
-    font-family: "SUSE", sans-serif;
+  text-align: left;
+  display: inline-block;
+  margin: 5px;
 }
 
-
+.modo-de-jogo, span, input {
+  font-family: "SUSE", sans-serif;
+}
