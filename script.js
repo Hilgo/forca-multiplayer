@@ -13,7 +13,7 @@ alfabeto.forEach(letra => {
 
     botao.addEventListener('click', () => {
       const letraClicada = botao.dataset.letra;
-      verificarLetra(letraClicada, botao);
+      verificarLetra(letraClicada, botao,false);
     });
 
     teclado.appendChild(botao);
@@ -31,9 +31,17 @@ let erros = 0;
 let fimJogo = false;
 let modoJogoSelecionado = 'DoisJogadores';
 
-function verificarLetra(letra,botao) {
+function verificarLetra(letra,botao, ehTurnoComputador = false) {
   if(fimJogo)
     return;
+
+  if(!ehTurnoComputador){
+    if(jogadorAtual != "indicadorJogadorUm" && jogadorAtual != "indicadorJogadorDois" ){
+      //clique no turno do computador, ignorar
+      return;
+    }
+  }
+
   const forcaImg = document.getElementById('imagem-forca');
 
   const letrasPalavraSecreta = document.querySelectorAll('.letra-palavra-secreta');
@@ -163,7 +171,7 @@ function jogadaDoComputador() {
   // Verificar se a letra escolhida está na palavra secreta e atualizar a tela
 
   setTimeout(() => {
-    verificarLetra(letraEscolhida,botaoDaLetra);
+    verificarLetra(letraEscolhida,botaoDaLetra,true);
   }, 1000); // Aguarda 1 segundo antes de verificar a letra
 }
 
