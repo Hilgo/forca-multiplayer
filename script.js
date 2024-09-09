@@ -143,7 +143,7 @@ function verificarLetra(letra,botao, ehTurnoComputador = false) {
 }
 
 const vogais = ['A', 'E', 'I', 'O', 'U'];
-const consoantesComuns = ['S', 'R', 'N', 'T', 'L'];
+const consoantesComuns = ['S', 'R', 'N', 'T', 'L','B','D'];
 let letrasUtilizadas = [];
 
 function jogadaDoComputador() {
@@ -157,12 +157,22 @@ function jogadaDoComputador() {
   } else {
       // Se não houver vogais disponíveis, escolher uma consoante comum
       const consoantesDisponiveis = consoantesComuns.filter(consoante => !letrasUtilizadas.includes(consoante));
-      const indiceAleatorio = Math.floor(Math.random() * consoantesDisponiveis.length);
-      letraEscolhida = consoantesDisponiveis[indiceAleatorio];
+      if(consoantesDisponiveis.length != 0){
+        const indiceAleatorio = Math.floor(Math.random() * consoantesDisponiveis.length);
+        letraEscolhida = consoantesDisponiveis[indiceAleatorio];
+      }
+      else{
+        // já escolhido todas as consoantes comuns
+        const botoes = document.querySelectorAll('.letra');
+        // Filtra os botões, retornando apenas aqueles que não estão desabilitados
+        const botoesHabilitados = Array.from(botoes).filter(botao => !botao.disabled);
+        const indiceAleatorio = Math.floor(Math.random() * botoesHabilitados.length);
+        letraEscolhida = botoesHabilitados[indiceAleatorio].innerHTML;
+      }
+
   }
 
   if(letraEscolhida == undefined){
-    console.log('Erro, sem palavra disponível!');
     alert("Opa, ocorreu um erro!");
     return;
   }
